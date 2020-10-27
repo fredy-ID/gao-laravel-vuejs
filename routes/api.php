@@ -1,7 +1,9 @@
 <?php
 
+use App\Models\Computer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Resources\ComputerResource;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,4 +20,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/computers', 'ComputerController@computers');
+// Route::get('/computers', 'ComputerController@computers');
+Route::get('/computers', 'ComputerController@computers', function() {
+    return new ComputerResource(Computer::all());
+});
+Route::post('/computers/create', 'ComputerController@create');

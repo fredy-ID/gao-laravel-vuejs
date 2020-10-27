@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Assignment;
 use App\Models\Client;
 use App\Models\Computer;
 use Illuminate\Support\Str;
@@ -29,8 +30,9 @@ class AppSeeder extends Seeder
         DB::table('user')->insert($user);
         // DB::table('computer')->insert([ 'name' => Str::random(10),]);
 
-        Computer::factory()->times(5)->create();
-        Client::factory()->times(10)->create();
+        Computer::factory()->times(4)->create();
+        Client::factory()->times(5)->create();
+        Assignment::factory()->times(5)->create();
 
     }
 }

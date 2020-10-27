@@ -16,7 +16,7 @@ class CreateAssignmentsTable extends Migration
         Schema::create('assignment', function (Blueprint $table) {
             $table->id();
             $table->date("date");
-            $table->dateTime("time", 0);
+            $table->time("time", 0);
             $table->integer("client_id")->unsigned();
             $table->foreign("client_id")->references('id')->on('client');
             $table->integer("computer_id")->unsigned();
