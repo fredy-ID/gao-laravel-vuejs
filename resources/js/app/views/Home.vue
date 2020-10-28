@@ -6,23 +6,24 @@
                 <h1>Liste des ordinateurs </h1>
                 <create-computer @createElement="getCreatedElement" />
             </v-row>
-            <computer :computers="computers[0]"/>
+            <computers :computers="computers[0]" :assignments="assignments[0]"/>
         </div>
     </div>
 
 </template>
 <script>
-import Computer from '../components/Computer';
+import Computers from '../components/Computer';
 import CreateComputer from '../components/dialogs/CreateComputer';
 
 export default {
     data() {
         return {
             computers: [],
+            assignments: [],
         };
     },
     components: {
-        Computer,
+        Computers,
         CreateComputer,
     },
 
@@ -30,16 +31,24 @@ export default {
         getComputers() {
             axios.get('/api/computers').then(response => {
                 this.computers.push(response.data)
+                console.log(response)
             });
         },
         getCreatedElement(data) {
             this.computers = [];
             this.computers.push(data)
-        }
+        },
+        getAssignments() {
+            axios.get('/api/computers/assignments').then(response => {
+                this.assignments.push(response.data.data)
+                console.log(this.assignments)
+            });
+        },
     },
 
     created() {
         this.getComputers();
+        this.getAssignments();
     }
 }
 </script>

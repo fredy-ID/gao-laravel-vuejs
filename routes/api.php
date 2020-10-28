@@ -21,7 +21,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 // Route::get('/computers', 'ComputerController@computers');
-Route::get('/computers', 'ComputerController@computers', function() {
-    return new ComputerResource(Computer::all());
-});
+Route::get('/computers', 'ComputerController@computers');
+Route::get('/computers/assignments', 'ComputerController@assignments');
+
 Route::post('/computers/create', 'ComputerController@create');

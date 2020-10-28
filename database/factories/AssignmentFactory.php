@@ -22,8 +22,10 @@ class AssignmentFactory extends Factory
     public function definition()
     {
         return [
-            'date' => $this->faker->date('27/10/2020'),
+            'date' => $this->faker->date('2020-10-27'),
             'time' => $this->faker->time('H:00:00'),
+            'client_id' => $this->faker->numberBetween(1, 5),
+            'computer_id' => $this->faker->numberBetween(1, 4),
         ];
     }
 }

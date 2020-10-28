@@ -1932,6 +1932,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -1941,6 +1951,11 @@ __webpack_require__.r(__webpack_exports__);
   },
   props: {
     computers: {
+      "default": function _default() {
+        return {};
+      }
+    },
+    assignments: {
       "default": function _default() {
         return {};
       }
@@ -2096,11 +2111,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      computers: []
+      computers: [],
+      assignments: []
     };
   },
   components: {
-    Computer: _components_Computer__WEBPACK_IMPORTED_MODULE_0__["default"],
+    Computers: _components_Computer__WEBPACK_IMPORTED_MODULE_0__["default"],
     CreateComputer: _components_dialogs_CreateComputer__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
   methods: {
@@ -2109,15 +2125,27 @@ __webpack_require__.r(__webpack_exports__);
 
       axios.get('/api/computers').then(function (response) {
         _this.computers.push(response.data);
+
+        console.log(response);
       });
     },
     getCreatedElement: function getCreatedElement(data) {
       this.computers = [];
       this.computers.push(data);
+    },
+    getAssignments: function getAssignments() {
+      var _this2 = this;
+
+      axios.get('/api/computers/assignments').then(function (response) {
+        _this2.assignments.push(response.data.data);
+
+        console.log(_this2.assignments);
+      });
     }
   },
   created: function created() {
     this.getComputers();
+    this.getAssignments();
   }
 });
 
@@ -20387,30 +20415,99 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "div",
-    { staticClass: "d-flex flex-row justify-space-around align-center" },
+    "v-row",
     _vm._l(_vm.computers, function(computer) {
       return _c(
-        "v-card",
-        {
-          key: computer.id,
-          attrs: { loading: _vm.loading, "max-width": "374" }
-        },
+        "v-col",
+        { key: computer.id, attrs: { cols: "12", sm: "4" } },
         [
           _c(
-            "template",
-            { slot: "progress" },
+            "v-card",
+            { attrs: { loading: _vm.loading, "max-width": "374" } },
             [
-              _c("v-progress-linear", {
-                attrs: { color: "deep-purple", height: "10", indeterminate: "" }
-              })
+              _c(
+                "template",
+                { slot: "progress" },
+                [
+                  _c("v-progress-linear", {
+                    attrs: {
+                      color: "deep-purple",
+                      height: "10",
+                      indeterminate: ""
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c("v-card-title", [_vm._v(_vm._s(computer.name))]),
+              _vm._v(" "),
+              _c(
+                "v-card-text",
+                [
+                  _c(
+                    "v-container",
+                    [
+                      _c("v-simple-table", {
+                        scopedSlots: _vm._u(
+                          [
+                            {
+                              key: "default",
+                              fn: function() {
+                                return [
+                                  _c(
+                                    "tbody",
+                                    _vm._l(_vm.assignments, function(
+                                      assignment
+                                    ) {
+                                      return _c(
+                                        "tr",
+                                        {
+                                          key: assignment.time,
+                                          attrs: {
+                                            value: [
+                                              assignment.client_id.last_name,
+                                              assignment.client_id.first_name
+                                            ]
+                                          }
+                                        },
+                                        [
+                                          _c("td", [
+                                            _vm._v(
+                                              _vm._s(
+                                                assignment.client_id.first_name
+                                              ) +
+                                                " " +
+                                                _vm._s(
+                                                  assignment.client_id.last_name
+                                                )
+                                            )
+                                          ])
+                                        ]
+                                      )
+                                    }),
+                                    0
+                                  )
+                                ]
+                              },
+                              proxy: true
+                            }
+                          ],
+                          null,
+                          true
+                        )
+                      })
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
             ],
-            1
-          ),
-          _vm._v(" "),
-          _c("v-card-title", [_vm._v(_vm._s(computer.name))])
+            2
+          )
         ],
-        2
+        1
       )
     }),
     1
@@ -20680,7 +20777,12 @@ var render = function() {
           1
         ),
         _vm._v(" "),
-        _c("computer", { attrs: { computers: _vm.computers[0] } })
+        _c("computers", {
+          attrs: {
+            computers: _vm.computers[0],
+            assignments: _vm.assignments[0]
+          }
+        })
       ],
       1
     )
@@ -80105,15 +80207,14 @@ __webpack_require__.r(__webpack_exports__);
 /*!*****************************************!*\
   !*** ./resources/js/app/views/Home.vue ***!
   \*****************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Home_vue_vue_type_template_id_e6b5e8a8___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Home.vue?vue&type=template&id=e6b5e8a8& */ "./resources/js/app/views/Home.vue?vue&type=template&id=e6b5e8a8&");
 /* harmony import */ var _Home_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Home.vue?vue&type=script&lang=js& */ "./resources/js/app/views/Home.vue?vue&type=script&lang=js&");
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _Home_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _Home_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -80143,7 +80244,7 @@ component.options.__file = "resources/js/app/views/Home.vue"
 /*!******************************************************************!*\
   !*** ./resources/js/app/views/Home.vue?vue&type=script&lang=js& ***!
   \******************************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

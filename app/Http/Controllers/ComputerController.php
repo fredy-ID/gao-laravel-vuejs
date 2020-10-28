@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Computer;
+use App\Models\Assignment;
 use Illuminate\Http\Request;
 use App\Http\Resources\ComputerResource;
+use App\Http\Resources\AssignmentResource;
 
 class ComputerController extends Controller
 {
@@ -25,6 +27,10 @@ class ComputerController extends Controller
         $addComputer->save();
 
         return ComputerResource::collection(Computer::all());
+    }
+
+    public function assignments() {
+        return AssignmentResource::collection(Assignment::all());
     }
 
 }

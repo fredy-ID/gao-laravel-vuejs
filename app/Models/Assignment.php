@@ -16,4 +16,17 @@ class Assignment extends Model
      */
     protected $table = 'assignment';
     protected $primaryKey = 'id';
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'date',
+        'time',
+        'client_id',
+        'computer_id',
+
+    ];
 }
