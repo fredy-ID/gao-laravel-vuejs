@@ -17,9 +17,17 @@
                         <v-simple-table>
                             <template v-slot:default>
                             <tbody>
-                                <tr v-for="assignment in assignments" v-bind:key="assignment.time" v-bind:value="[assignment.client_id.last_name, assignment.client_id.first_name]">
-                                    <td>{{ assignment.client_id.first_name }} {{ assignment.client_id.last_name }}</td>
-                                </tr>
+                                <v-row v-for="(time, key) in times" :key="key">
+                                    <v-col cols="3"> {{ time.index }}h</v-col>
+                                    <v-col cols="5">
+                                        <span v-if="time.assignment">
+                                            {{ time.assignment.last_name + " " + time.assignment.first_name }}
+                                        </span>
+                                    </v-col>
+                                    <v-col cols="2">
+                                        <add-assignment />
+                                    </v-col>
+                                </v-row>
                             </tbody>
                             </template>
                         </v-simple-table>
