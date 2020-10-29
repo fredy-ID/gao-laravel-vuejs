@@ -20,8 +20,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-// Route::get('/computers', 'ComputerController@computers');
 Route::get('/computers', 'ComputerController@computers');
-Route::get('/computers/assignments', 'ComputerController@assignments');
 
+Route::get('/computers/assignments', 'ComputerController@assignments');
 Route::post('/computers/create', 'ComputerController@create');

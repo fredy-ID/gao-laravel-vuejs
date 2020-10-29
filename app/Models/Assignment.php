@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Computer;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Assignment extends Model
 {
@@ -27,6 +28,10 @@ class Assignment extends Model
         'time',
         'client_id',
         'computer_id',
-
     ];
+
+    public function computer()
+    {
+        return $this->belongsTo(Computer::class);
+    }
 }

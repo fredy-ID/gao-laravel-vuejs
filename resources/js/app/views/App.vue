@@ -8,7 +8,8 @@
 
 </template>
 <script>
-    export default { 
+
+    export default {
         methods: {
             fetchComputers() {
                 axios.get('/api/computers').then(response => {
@@ -16,5 +17,6 @@
                 })
             },
         }
-     }
+    }
+
 </script>

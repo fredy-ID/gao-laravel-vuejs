@@ -11,7 +11,8 @@ use App\Http\Resources\AssignmentResource;
 class ComputerController extends Controller
 {
     public function computers() {
-        return Computer::all();
+        // return Computer::all();
+        return ComputerResource::collection(Computer::all());
     }
 
     public function create(Request $request)
@@ -32,5 +33,7 @@ class ComputerController extends Controller
     public function assignments() {
         return AssignmentResource::collection(Assignment::all());
     }
+
+
 
 }

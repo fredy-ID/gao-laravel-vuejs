@@ -1908,7 +1908,113 @@ module.exports = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _dialogs_AddAssignment__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./dialogs/AddAssignment */ "./resources/js/app/components/dialogs/AddAssignment.vue");
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: {
+    computer: {
+      required: true
+    }
+  },
+  components: {
+    AddAssignment: _dialogs_AddAssignment__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  data: function data() {
+    return {
+      loading: false,
+      selection: 1,
+      cells: [],
+      times: [],
+      assignments: {}
+    };
+  },
+  created: function created() {
+    this.initialize();
+  },
+  methods: {
+    reserve: function reserve() {
+      var _this = this;
+
+      this.loading = true;
+      setTimeout(function () {
+        return _this.loading = false;
+      }, 2000);
+    },
+    initialize: function initialize() {
+      var _this2 = this;
+
+      this.computer.assignment.forEach(function (data) {
+        _this2.assignments[data.time] = {
+          id: data.id,
+          last_name: data.client_id.last_name,
+          first_name: data.client_id.first_name
+        };
+      });
+      this.displayTime();
+    },
+    displayTime: function displayTime() {
+      this.times = [];
+
+      for (var i = 0; i < 10; i++) {
+        var index = i + 8 < 10 ? '0' + (i + 8) + ':00:00' : i + 8 + ':00:00';
+        this.times.push({
+          index: index,
+          assignment: typeof this.assignments[index] !== 'undefined' ? this.assignments[index] : false
+        });
+      }
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/app/components/dialogs/AddAssignment.vue?vue&type=script&lang=js&":
+/*!************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/app/components/dialogs/AddAssignment.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
 //
 //
 //
@@ -1945,30 +2051,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      loading: false,
-      selection: 1
+      dialog: false,
+      valid: true,
+      //   items: ['foo', 'bar', 'fizz', 'buzz', 'buziz', 'bupzz', 'buzkz', 'vbuzz', 'bruzz', 'bfuzz'],
+      items: [],
+      value: null
     };
   },
-  props: {
-    computers: {
-      "default": function _default() {
-        return {};
-      }
-    },
-    assignments: {
-      "default": function _default() {
-        return {};
-      }
-    }
-  },
   methods: {
-    reserve: function reserve() {
-      var _this = this;
-
-      this.loading = true;
-      setTimeout(function () {
-        return _this.loading = false;
-      }, 2000);
+    validate: function validate() {
+      console.log('ajout attribution');
     }
   }
 });
@@ -1984,10 +2076,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
-//
-//
-//
 //
 //
 //
@@ -2106,46 +2194,72 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  data: function data() {
-    return {
-      computers: [],
-      assignments: []
-    };
-  },
   components: {
     Computers: _components_Computer__WEBPACK_IMPORTED_MODULE_0__["default"],
     CreateComputer: _components_dialogs_CreateComputer__WEBPACK_IMPORTED_MODULE_1__["default"]
+  },
+  data: function data() {
+    return {
+      computers: [],
+      date: new Date().toISOString().substr(0, 10),
+      modal: false
+    };
   },
   methods: {
     getComputers: function getComputers() {
       var _this = this;
 
-      axios.get('/api/computers').then(function (response) {
-        _this.computers.push(response.data);
-
-        console.log(response);
+      axios.get('/api/computers', {
+        params: {
+          date: this.date
+        }
+      }).then(function (response) {
+        _this.computers = response.data.data;
+        var date = response.config.params.date;
+      })["catch"](function (error) {
+        console.log(error);
       });
+      ;
     },
     getCreatedElement: function getCreatedElement(data) {
       this.computers = [];
       this.computers.push(data);
     },
-    getAssignments: function getAssignments() {
-      var _this2 = this;
-
-      axios.get('/api/computers/assignments').then(function (response) {
-        _this2.assignments.push(response.data.data);
-
-        console.log(_this2.assignments);
-      });
+    test: function test(a) {
+      console.log(a);
     }
   },
   created: function created() {
     this.getComputers();
-    this.getAssignments();
   }
 });
 
@@ -20415,101 +20529,219 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "v-row",
-    _vm._l(_vm.computers, function(computer) {
-      return _c(
-        "v-col",
-        { key: computer.id, attrs: { cols: "12", sm: "4" } },
+    "v-card",
+    { attrs: { loading: _vm.loading, "max-width": "374" } },
+    [
+      _c(
+        "template",
+        { slot: "progress" },
+        [
+          _c("v-progress-linear", {
+            attrs: { color: "deep-purple", height: "10", indeterminate: "" }
+          })
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c("v-card-title", [_vm._v(_vm._s(_vm.computer.name))]),
+      _vm._v(" "),
+      _c(
+        "v-card-text",
         [
           _c(
-            "v-card",
-            { attrs: { loading: _vm.loading, "max-width": "374" } },
+            "v-container",
             [
-              _c(
-                "template",
-                { slot: "progress" },
-                [
-                  _c("v-progress-linear", {
-                    attrs: {
-                      color: "deep-purple",
-                      height: "10",
-                      indeterminate: ""
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c("v-card-title", [_vm._v(_vm._s(computer.name))]),
-              _vm._v(" "),
-              _c(
-                "v-card-text",
-                [
-                  _c(
-                    "v-container",
-                    [
-                      _c("v-simple-table", {
-                        scopedSlots: _vm._u(
-                          [
-                            {
-                              key: "default",
-                              fn: function() {
-                                return [
-                                  _c(
-                                    "tbody",
-                                    _vm._l(_vm.assignments, function(
-                                      assignment
-                                    ) {
-                                      return _c(
-                                        "tr",
-                                        {
-                                          key: assignment.time,
-                                          attrs: {
-                                            value: [
-                                              assignment.client_id.last_name,
-                                              assignment.client_id.first_name
-                                            ]
-                                          }
-                                        },
-                                        [
-                                          _c("td", [
-                                            _vm._v(
-                                              _vm._s(
-                                                assignment.client_id.first_name
-                                              ) +
+              _c("v-simple-table", {
+                scopedSlots: _vm._u([
+                  {
+                    key: "default",
+                    fn: function() {
+                      return [
+                        _c(
+                          "tbody",
+                          _vm._l(_vm.times, function(time, key) {
+                            return _c(
+                              "v-row",
+                              { key: key },
+                              [
+                                _c("v-col", { attrs: { cols: "3" } }, [
+                                  _vm._v(" " + _vm._s(time.index) + "h")
+                                ]),
+                                _vm._v(" "),
+                                _c("v-col", { attrs: { cols: "5" } }, [
+                                  time.assignment
+                                    ? _c("span", [
+                                        _vm._v(
+                                          "\n                                    " +
+                                            _vm._s(
+                                              time.assignment.last_name +
                                                 " " +
-                                                _vm._s(
-                                                  assignment.client_id.last_name
-                                                )
-                                            )
-                                          ])
-                                        ]
-                                      )
-                                    }),
-                                    0
-                                  )
-                                ]
-                              },
-                              proxy: true
-                            }
-                          ],
-                          null,
-                          true
+                                                time.assignment.first_name
+                                            ) +
+                                            "\n                                "
+                                        )
+                                      ])
+                                    : _vm._e()
+                                ]),
+                                _vm._v(" "),
+                                _c(
+                                  "v-col",
+                                  { attrs: { cols: "2" } },
+                                  [_c("add-assignment")],
+                                  1
+                                )
+                              ],
+                              1
+                            )
+                          }),
+                          1
                         )
-                      })
-                    ],
-                    1
-                  )
-                ],
-                1
-              )
+                      ]
+                    },
+                    proxy: true
+                  }
+                ])
+              })
             ],
-            2
+            1
           )
         ],
         1
       )
-    }),
+    ],
+    2
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/app/components/dialogs/AddAssignment.vue?vue&type=template&id=676f113d&":
+/*!****************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/app/components/dialogs/AddAssignment.vue?vue&type=template&id=676f113d& ***!
+  \****************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "v-dialog",
+    {
+      attrs: { persistent: "", "max-width": "600px" },
+      scopedSlots: _vm._u([
+        {
+          key: "activator",
+          fn: function(ref) {
+            var on = ref.on
+            var attrs = ref.attrs
+            return [
+              _c(
+                "v-btn",
+                _vm._g(
+                  _vm._b(
+                    {
+                      staticClass: "mx-2",
+                      attrs: { fab: "", dark: "", color: "indigo" }
+                    },
+                    "v-btn",
+                    attrs,
+                    false
+                  ),
+                  on
+                ),
+                [_c("v-icon", { attrs: { dark: "" } }, [_vm._v(" mdi-plus ")])],
+                1
+              )
+            ]
+          }
+        }
+      ]),
+      model: {
+        value: _vm.dialog,
+        callback: function($$v) {
+          _vm.dialog = $$v
+        },
+        expression: "dialog"
+      }
+    },
+    [
+      _vm._v(" "),
+      _c(
+        "v-card",
+        [
+          _c("v-card-title", [
+            _c("span", { staticClass: "headline" }, [
+              _vm._v("Attribuer un ordinateur")
+            ])
+          ]),
+          _vm._v(" "),
+          _c(
+            "v-card-text",
+            [
+              _c(
+                "v-container",
+                [
+                  _c("v-autocomplete", {
+                    attrs: { items: _vm.items, dense: "", label: "Filled" },
+                    model: {
+                      value: _vm.value,
+                      callback: function($$v) {
+                        _vm.value = $$v
+                      },
+                      expression: "value"
+                    }
+                  })
+                ],
+                1
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-card-actions",
+            [
+              _c("v-spacer"),
+              _vm._v(" "),
+              _c(
+                "v-btn",
+                {
+                  attrs: { color: "blue darken-1", text: "" },
+                  on: {
+                    click: function($event) {
+                      _vm.dialog = false
+                    }
+                  }
+                },
+                [_vm._v("\n                  Fermer\n              ")]
+              ),
+              _vm._v(" "),
+              _c(
+                "v-btn",
+                {
+                  staticClass: "mr-4",
+                  attrs: { disabled: !_vm.valid, color: "success" },
+                  on: { click: _vm.validate }
+                },
+                [_vm._v("\n                  Valider\n              ")]
+              )
+            ],
+            1
+          )
+        ],
+        1
+      )
+    ],
     1
   )
 }
@@ -20777,12 +21009,154 @@ var render = function() {
           1
         ),
         _vm._v(" "),
-        _c("computers", {
-          attrs: {
-            computers: _vm.computers[0],
-            assignments: _vm.assignments[0]
-          }
-        })
+        _c(
+          "v-row",
+          [
+            _c("v-spacer"),
+            _vm._v(" "),
+            _c(
+              "v-col",
+              { attrs: { cols: "12", sm: "6", md: "4" } },
+              [
+                _c(
+                  "v-dialog",
+                  {
+                    ref: "dialog",
+                    attrs: {
+                      "return-value": _vm.date,
+                      persistent: "",
+                      width: "290px"
+                    },
+                    on: {
+                      "update:returnValue": function($event) {
+                        _vm.date = $event
+                      },
+                      "update:return-value": function($event) {
+                        _vm.date = $event
+                      }
+                    },
+                    scopedSlots: _vm._u([
+                      {
+                        key: "activator",
+                        fn: function(ref) {
+                          var on = ref.on
+                          var attrs = ref.attrs
+                          return [
+                            _c(
+                              "v-text-field",
+                              _vm._g(
+                                _vm._b(
+                                  {
+                                    attrs: {
+                                      label: "Picker in dialog",
+                                      "prepend-icon": "mdi-calendar",
+                                      readonly: ""
+                                    },
+                                    model: {
+                                      value: _vm.date,
+                                      callback: function($$v) {
+                                        _vm.date = $$v
+                                      },
+                                      expression: "date"
+                                    }
+                                  },
+                                  "v-text-field",
+                                  attrs,
+                                  false
+                                ),
+                                on
+                              )
+                            )
+                          ]
+                        }
+                      }
+                    ]),
+                    model: {
+                      value: _vm.modal,
+                      callback: function($$v) {
+                        _vm.modal = $$v
+                      },
+                      expression: "modal"
+                    }
+                  },
+                  [
+                    _vm._v(" "),
+                    _c(
+                      "v-date-picker",
+                      {
+                        attrs: { scrollable: "" },
+                        model: {
+                          value: _vm.date,
+                          callback: function($$v) {
+                            _vm.date = $$v
+                          },
+                          expression: "date"
+                        }
+                      },
+                      [
+                        _c("v-spacer"),
+                        _vm._v(" "),
+                        _c(
+                          "v-btn",
+                          {
+                            attrs: { text: "", color: "primary" },
+                            on: {
+                              click: function($event) {
+                                _vm.modal = false
+                              }
+                            }
+                          },
+                          [
+                            _vm._v(
+                              "\n                            Cancel\n                        "
+                            )
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "v-btn",
+                          {
+                            attrs: { text: "", color: "primary" },
+                            on: {
+                              click: function($event) {
+                                _vm.$refs.dialog.save(_vm.date),
+                                  _vm.test(_vm.date)
+                              }
+                            }
+                          },
+                          [
+                            _vm._v(
+                              "\n                            OK\n                        "
+                            )
+                          ]
+                        )
+                      ],
+                      1
+                    )
+                  ],
+                  1
+                )
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c("v-spacer")
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c(
+          "v-row",
+          _vm._l(_vm.computers, function(computer) {
+            return _c(
+              "v-col",
+              { key: computer.id, attrs: { cols: "12", sm: "6", md: "4" } },
+              [_c("computers", { attrs: { computer: computer } })],
+              1
+            )
+          }),
+          1
+        )
       ],
       1
     )
@@ -79935,6 +80309,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Computer_vue_vue_type_template_id_ba0b17d0___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Computer_vue_vue_type_template_id_ba0b17d0___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/app/components/dialogs/AddAssignment.vue":
+/*!***************************************************************!*\
+  !*** ./resources/js/app/components/dialogs/AddAssignment.vue ***!
+  \***************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _AddAssignment_vue_vue_type_template_id_676f113d___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./AddAssignment.vue?vue&type=template&id=676f113d& */ "./resources/js/app/components/dialogs/AddAssignment.vue?vue&type=template&id=676f113d&");
+/* harmony import */ var _AddAssignment_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./AddAssignment.vue?vue&type=script&lang=js& */ "./resources/js/app/components/dialogs/AddAssignment.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _AddAssignment_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _AddAssignment_vue_vue_type_template_id_676f113d___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _AddAssignment_vue_vue_type_template_id_676f113d___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/app/components/dialogs/AddAssignment.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/app/components/dialogs/AddAssignment.vue?vue&type=script&lang=js&":
+/*!****************************************************************************************!*\
+  !*** ./resources/js/app/components/dialogs/AddAssignment.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_AddAssignment_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./AddAssignment.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/app/components/dialogs/AddAssignment.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_AddAssignment_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/app/components/dialogs/AddAssignment.vue?vue&type=template&id=676f113d&":
+/*!**********************************************************************************************!*\
+  !*** ./resources/js/app/components/dialogs/AddAssignment.vue?vue&type=template&id=676f113d& ***!
+  \**********************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AddAssignment_vue_vue_type_template_id_676f113d___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./AddAssignment.vue?vue&type=template&id=676f113d& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/app/components/dialogs/AddAssignment.vue?vue&type=template&id=676f113d&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AddAssignment_vue_vue_type_template_id_676f113d___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AddAssignment_vue_vue_type_template_id_676f113d___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

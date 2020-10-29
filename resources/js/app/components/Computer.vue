@@ -1,9 +1,7 @@
 <template>
-    <v-row >
-        <!-- <li v-for="computer in computers" v-bind:key="computer.id">
+        <!-- <li v-for="computer in computersList" v-bind:key="computer.id">
             {{ computer.name }} toto
         </li> -->
-        <v-col v-for="computer in computers" v-bind:key="computer.id" cols="12" sm="4">
             <v-card :loading="loading"  max-width="374">
                 <template slot="progress">
                     <v-progress-linear
@@ -29,34 +27,63 @@
                 </v-card-text>
 
             </v-card>
-        </v-col>
-    </v-row>
 </template>
 <script>
+    import AddAssignment from './dialogs/AddAssignment';
+
     export default {
+        props: {
+            computer: {
+                required: true
+            },
+        },
+        components: {
+            AddAssignment,  
+        },
         data: () => ({
             loading: false,
             selection: 1,
+            cells: [],
+            times: [],
+            assignments: {},
+
         }),
-        props: {
-            computers: {
-                default: function () {
-                    return {};
-                }
-            },
-            assignments: {
-                default: function () {
-                    return {};
-                }
-            }
+        created () {
+                this.initialize();
         },
         methods: {
+            
             reserve () {
                 this.loading = true
                 setTimeout(() => (this.loading = false), 2000)
             },
+            initialize () {
+                
+               this.computer.assignment.forEach(data => {
+                    this.assignments[data.time] = {
+                        id: data.id,
+                        last_name: data.client_id.last_name,
+                        first_name: data.client_id.first_name
+                    };
+                });
+                
+                this.displayTime();
+            },
+            displayTime() {
+                this.times = [];
 
+                for (let i = 0; i < 10; i++) {
+                        var index = (i + 8 < 10) ? '0' + (i + 8) +':00:00' : (i + 8) +':00:00';
+
+                        this.times.push({
+                        index: index,
+                        assignment: (typeof this.assignments[index] !== 'undefined') ? this.assignments[index] : false
+                    })
+                }
+            },
         },
+        
+        
         
     }
 </script>

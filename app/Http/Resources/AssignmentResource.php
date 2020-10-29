@@ -18,10 +18,11 @@ class AssignmentResource extends JsonResource
     public function toArray($request)
     {
         return [
+            'id' => $this->id,
             'date' => $this->date,
             'time' => $this->time,
             'client_id' => new ClientResource(Client::find($this->client_id)),
-            'computer_id' => new ComputerResource(Computer::find($this->computer_id)),
+            // 'computer_id' => new ComputerResource(Computer::find($this->computer_id)),
         ];
     }
 }
