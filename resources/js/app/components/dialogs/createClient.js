@@ -1,7 +1,7 @@
 export default {
     data: () => ({
       dialog: false,
-      valid: true,
+      valid: false,
       firstName: '',
       lastName: '',
       nameRules: [
@@ -12,6 +12,7 @@ export default {
 
     methods: {
       validate () {
+        this.valid =  false;
         // this.$refs.form.validate()
         axios.post('/api/client/create', {
             firstName: this.firstName,
@@ -19,7 +20,6 @@ export default {
         }).then( (response) => {
             this.firstName = '';
             this.lastName = '';
-            this.valid =  true;
             this.dialog = false;
             this.$emit('createElement', response.data)
         })

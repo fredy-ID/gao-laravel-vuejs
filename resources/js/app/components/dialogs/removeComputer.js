@@ -16,6 +16,7 @@ export default {
 
     methods: {
         remove (id, index) {
+            this.valid = false
             // this.$refs.form.validate()
             axios.post('/api/computers/delete', {
                 id: id,
@@ -24,6 +25,7 @@ export default {
                 if(success) {
                     this.$emit('removeElement', index)
                 }
+
             })
         },
     },

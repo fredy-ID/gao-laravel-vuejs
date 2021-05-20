@@ -17,7 +17,7 @@ export default {
 
     data: () => ({
       dialog: false,
-      valid: true,
+      valid: false,
       items: [],
       value: null,
       searchInput: "",
@@ -33,6 +33,7 @@ export default {
 
     methods: {
       validate (index) {
+        this.valid =  false;
         const computerId = parseInt(this.$props.computerId);
         const time = parseInt(this.$props.time);
         const date = this.$props.date;
@@ -40,6 +41,8 @@ export default {
 
         axios.get('/api/create/assignment', { params: { date: date, computer: computerId, time: time, client: clientId }}).then((response) => {
             this.$emit('editElement', response.data.assignment[0])
+            this.value = null
+            this.dialog = false;
         }).catch(error => {
             console.log(error);
         });
@@ -47,6 +50,7 @@ export default {
       },
 
         searchClient() {
+            this.value = null
             this.items = [];
             if(this.searchInput.length >= 3) {
                 setTimeout(() => {

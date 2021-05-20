@@ -1,7 +1,4 @@
 <template>
-        <!-- <li v-for="computer in computersList" v-bind:key="computer.id">
-            {{ computer.name }} toto
-        </li> -->
             <v-card :loading="loading"  max-width="374">
                 <template slot="progress">
                     <v-progress-linear
@@ -12,34 +9,58 @@
                 </template>
 
                 <v-card-title @click="test('a')">
-                    {{ computer.name }}
-                    <remove-computer :id="computer.id" :index="index" @removeElement="removeElement"/>
-                    <rename-computer :id="computer.id" :index="index" @editElement="editComputerName"/>
+                    <div>
+                        <div>
+                            {{ computer.name }}
+                        </div>
+
+                        <div class="ml-auto">
+                            <rename-computer :id="computer.id" :index="index" @editElement="editComputerName"/>
+                            <remove-computer :id="computer.id" :index="index" @removeElement="removeElement"/>
+                        </div>
+                    </div>
+
                 </v-card-title>
                 <v-card-text>
                     <v-container>
-                        <v-simple-table>
-                            <template v-slot:default>
-                            <tbody>
-                                <v-row v-for="(time, key) in times" :key="key">
-                                    <v-col cols="3"> {{ time.index }} h</v-col>
-                                    <v-col cols="5">
-                                        <span v-if="time.assignment">
-                                            {{ time.assignment.last_name + " " + time.assignment.first_name }}
-                                        </span>
-                                    </v-col>
-                                    <v-col cols="2">
-                                        <add-assignment :index="key" :date="date" :time="time.index" :computerId="computer.id" @editElement="editAssignment"/>
+                        <v-list two-line>
+                            <v-list-item-group
+                            >
+                                <template v-for="(time, index) in times">
+                                <v-list-item
+                                    :key="time.id"
+                                >
+                                    <v-list-item-content>
+                                        <v-list-item-title>
+                                            {{ time.index }} h
+                                        </v-list-item-title>
+                                    </v-list-item-content>
+
+                                    <v-list-item-content>
+                                        <v-list-item-title>
+                                            <span v-if="time.assignment">
+                                                {{ time.assignment.last_name + " " + time.assignment.first_name }}
+                                            </span>
+                                        </v-list-item-title>
+                                    </v-list-item-content>
+
+                                    <v-list-item-action>
+                                        <add-assignment :index="index" :date="date" :time="time.index" :computerId="computer.id" @editElement="editAssignment"/>
+                                    </v-list-item-action>                            <v-list-item-action>
                                         <remove-assignment
                                             v-if="time.assignment"
                                             :id="time.assignment.id"
                                             @removeElement="deleteAssignment"
                                         />
-                                    </v-col>
-                                </v-row>
-                            </tbody>
-                            </template>
-                        </v-simple-table>
+                                    </v-list-item-action>
+                                </v-list-item>
+                                <v-divider
+                                    v-if="index < times.length - 1"
+                                    :key="index"
+                                ></v-divider>
+                                </template>
+                            </v-list-item-group>
+                        </v-list>
                     </v-container>
                 </v-card-text>
 

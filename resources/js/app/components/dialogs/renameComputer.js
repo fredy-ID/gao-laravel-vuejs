@@ -10,7 +10,7 @@ export default {
 
     data: () => ({
       dialog: false,
-      valid: true,
+      valid: false,
       name: '',
       nameRules: [
         v => !!v || 'Nom requis',
@@ -20,6 +20,7 @@ export default {
 
     methods: {
       edit (id, index) {
+            this.valid =  false;
           const name = this.name
         // this.$refs.form.validate()
         axios.post('/api/computers/edit', {
@@ -27,7 +28,6 @@ export default {
             name: name,
         }).then( (response) => {
             this.name = '';
-            this.valid =  true;
             this.dialog = false;
 
             const success = response.data.success

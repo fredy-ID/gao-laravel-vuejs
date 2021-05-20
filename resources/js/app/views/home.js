@@ -1,4 +1,5 @@
 import Computers from '../components/Computer.vue';
+import CardComputer from '../components/CardComputer.vue';
 import CreateComputer from '../components/dialogs/CreateComputer.vue';
 import CreateClient from '../components/dialogs/CreateClient.vue';
 
@@ -8,6 +9,7 @@ export default {
         Computers,
         CreateComputer,
         CreateClient,
+        CardComputer,
     },
 
     data() {
@@ -15,8 +17,20 @@ export default {
             computers: [],
             date: new Date().toISOString().substr(0, 10),
             modal: false,
+
+            // data iterator
+            itemsPerPageArray: [4, 8, 12],
+            page: 1,
+            itemsPerPage: 4,
+            search: '',
         };
     },
+
+    computed: {
+        numberOfPages () {
+          return Math.ceil(this.computers.length / this.itemsPerPage)
+        },
+      },
 
     methods: {
         getComputers() {
@@ -42,7 +56,15 @@ export default {
         },
         test(a) {
             console.log(a)
-        }
+        },
+
+        // data iterator
+        nextPage () {
+            if (this.page + 1 <= this.numberOfPages) this.page += 1
+          },
+          formerPage () {
+            if (this.page - 1 >= 1) this.page -= 1
+          },
     },
 
     created() {

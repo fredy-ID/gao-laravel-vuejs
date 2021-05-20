@@ -1,8 +1,8 @@
 <template>
   <v-dialog v-model="dialog" persistent max-width="600px">
     <template v-slot:activator="{ on, attrs }">
-        <v-btn class="mx-2" fab dark color="indigo" v-bind="attrs" v-on="on">
-            <v-icon dark> mdi-minus </v-icon>
+        <v-btn icon dark color="error" v-bind="attrs" v-on="on">
+            <v-icon dark> mdi-minus-circle-outline </v-icon>
         </v-btn>
     </template>
         <v-card>

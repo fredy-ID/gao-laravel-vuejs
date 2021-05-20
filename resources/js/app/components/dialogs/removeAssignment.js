@@ -13,6 +13,7 @@ export default {
 
     methods: {
         remove (id) {
+            this.valid = false
             // this.$refs.form.validate()
             axios.post('/api/assignment/delete', {
                 id: id,
@@ -21,6 +22,7 @@ export default {
                 if(success) {
                     this.$emit('removeElement', id)
                 }
+                this.valid = true
             })
         },
     },

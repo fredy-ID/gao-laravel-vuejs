@@ -5,8 +5,8 @@
     max-width="600px"
     >
     <template v-slot:activator="{ on, attrs }">
-        <v-btn class="mx-2" fab dark color="indigo" v-bind="attrs" v-on="on">
-            <v-icon dark> mdi-plus </v-icon>
+        <v-btn icon dark color="indigo" v-bind="attrs" v-on="on">
+            <v-icon dark> mdi-account-edit </v-icon>
         </v-btn>
     </template>
         <v-card>
@@ -24,6 +24,7 @@
                         dense
                         label="Utilisateur"
                         @keyup="searchClient"
+                        @change="valid = true"
                         :clearable="true"
                     >
                     </v-autocomplete>
