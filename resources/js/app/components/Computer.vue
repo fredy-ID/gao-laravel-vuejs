@@ -11,21 +11,30 @@
                     ></v-progress-linear>
                 </template>
 
-                <v-card-title>{{ computer.name }}</v-card-title>
+                <v-card-title @click="test('a')">
+                    {{ computer.name }}
+                    <remove-computer :id="computer.id" :index="index" @removeElement="removeElement"/>
+                    <rename-computer :id="computer.id" :index="index" @editElement="editComputerName"/>
+                </v-card-title>
                 <v-card-text>
                     <v-container>
                         <v-simple-table>
                             <template v-slot:default>
                             <tbody>
                                 <v-row v-for="(time, key) in times" :key="key">
-                                    <v-col cols="3"> {{ time.index }}h</v-col>
+                                    <v-col cols="3"> {{ time.index }} h</v-col>
                                     <v-col cols="5">
                                         <span v-if="time.assignment">
                                             {{ time.assignment.last_name + " " + time.assignment.first_name }}
                                         </span>
                                     </v-col>
                                     <v-col cols="2">
-                                        <add-assignment />
+                                        <add-assignment :index="key" :date="date" :time="time.index" :computerId="computer.id" @editElement="editAssignment"/>
+                                        <remove-assignment
+                                            v-if="time.assignment"
+                                            :id="time.assignment.id"
+                                            @removeElement="deleteAssignment"
+                                        />
                                     </v-col>
                                 </v-row>
                             </tbody>
@@ -36,62 +45,4 @@
 
             </v-card>
 </template>
-<script>
-    import AddAssignment from './dialogs/AddAssignment';
-
-    export default {
-        props: {
-            computer: {
-                required: true
-            },
-        },
-        components: {
-            AddAssignment,  
-        },
-        data: () => ({
-            loading: false,
-            selection: 1,
-            cells: [],
-            times: [],
-            assignments: {},
-
-        }),
-        created () {
-                this.initialize();
-        },
-        methods: {
-            
-            reserve () {
-                this.loading = true
-                setTimeout(() => (this.loading = false), 2000)
-            },
-            initialize () {
-                
-               this.computer.assignment.forEach(data => {
-                    this.assignments[data.time] = {
-                        id: data.id,
-                        last_name: data.client_id.last_name,
-                        first_name: data.client_id.first_name
-                    };
-                });
-                
-                this.displayTime();
-            },
-            displayTime() {
-                this.times = [];
-
-                for (let i = 0; i < 10; i++) {
-                        var index = (i + 8 < 10) ? '0' + (i + 8) +':00:00' : (i + 8) +':00:00';
-
-                        this.times.push({
-                        index: index,
-                        assignment: (typeof this.assignments[index] !== 'undefined') ? this.assignments[index] : false
-                    })
-                }
-            },
-        },
-        
-        
-        
-    }
-</script>
+<script src="./computer.js"></script>

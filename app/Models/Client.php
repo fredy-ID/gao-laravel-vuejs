@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Assignment;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Client extends Model
 {
     use HasFactory;
-    
+
     /**
      * The table associated with the model.
      *
@@ -26,4 +27,9 @@ class Client extends Model
         'last_name',
         'first_name'
     ];
+
+    public function assignment()
+    {
+        return $this->hasMany(Assignment::class);
+    }
 }

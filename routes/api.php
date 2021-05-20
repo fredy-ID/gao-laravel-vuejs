@@ -21,6 +21,12 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('/computers', 'ComputerController@computers');
-
-Route::get('/computers/assignments', 'ComputerController@assignments');
 Route::post('/computers/create', 'ComputerController@create');
+Route::post('/computers/edit', 'ComputerController@edit');
+Route::post('/computers/delete', 'ComputerController@delete');
+
+Route::get('/clients/search', 'ClientController@clientsSearch');
+Route::post('/client/create', 'ClientController@create');
+
+Route::get('/create/assignment', 'AssignmentController@createAssignment');
+Route::post('/assignment/delete', 'AssignmentController@delete');

@@ -21,7 +21,7 @@ class AssignmentResource extends JsonResource
             'id' => $this->id,
             'date' => $this->date,
             'time' => $this->time,
-            'client_id' => new ClientResource(Client::find($this->client_id)),
+            'client' => new ClientResource(Client::find($this->client_id)),
             // 'computer_id' => new ComputerResource(Computer::find($this->computer_id)),
         ];
     }

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Client;
 use App\Models\Computer;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -33,5 +34,9 @@ class Assignment extends Model
     public function computer()
     {
         return $this->belongsTo(Computer::class);
+    }
+
+    public function client() {
+        return $this->belongsTo(Client::class);
     }
 }

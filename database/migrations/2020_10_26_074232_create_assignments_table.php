@@ -18,9 +18,9 @@ class CreateAssignmentsTable extends Migration
             $table->date("date");
             $table->time("time", 0);
             $table->integer("client_id")->unsigned();
-            $table->foreign("client_id")->references('id')->on('client');
+            $table->foreign("client_id")->references('id')->on('client')->onDelete('cascade');
             $table->integer("computer_id")->unsigned();
-            $table->foreign("computer_id")->references('id')->on('computer');
+            $table->foreign("computer_id")->references('id')->on('computer')->onDelete('cascade');
             $table->timestamps();
         });
     }

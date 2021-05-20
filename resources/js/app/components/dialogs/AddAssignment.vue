@@ -11,11 +11,22 @@
     </template>
         <v-card>
             <v-card-title>
-                <span class="headline">Attribuer un ordinateur</span>
+                <span class="headline">Ajoutez ou sélectionnez un utilisateur à assigner</span>
             </v-card-title>
             <v-card-text>
                 <v-container>
-                    <v-autocomplete v-model="value" :items="items" dense label="Filled"></v-autocomplete>
+                    <v-autocomplete
+                        v-model="value"
+                        :items="items"
+                        item-text="name"
+                        item-value="id"
+                        :search-input.sync="searchInput"
+                        dense
+                        label="Utilisateur"
+                        @keyup="searchClient"
+                        :clearable="true"
+                    >
+                    </v-autocomplete>
                 </v-container>
             </v-card-text>
             <v-card-actions>
@@ -23,7 +34,7 @@
                 <v-btn color="blue darken-1" text @click="dialog = false">
                     Fermer
                 </v-btn>
-                <v-btn :disabled="!valid" color="success" class="mr-4" @click="validate">
+                <v-btn :disabled="!valid" color="success" class="mr-4" @click="validate(index)">
                     Valider
                 </v-btn>
             </v-card-actions>
@@ -31,20 +42,4 @@
     </v-dialog>
 </template>
 
-<script>
-export default {
-    data: () => ({
-      dialog: false,
-      valid: true,
-    //   items: ['foo', 'bar', 'fizz', 'buzz', 'buziz', 'bupzz', 'buzkz', 'vbuzz', 'bruzz', 'bfuzz'],
-      items: [],
-      value: null,
-    }),
-
-    methods: {
-      validate () {
-          console.log('ajout attribution')
-      },
-    },
-}
-</script>
+<script src="./addAssignment.js"></script>

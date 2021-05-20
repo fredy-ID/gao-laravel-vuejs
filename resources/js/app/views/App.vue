@@ -13,7 +13,7 @@
         methods: {
             fetchComputers() {
                 axios.get('/api/computers').then(response => {
-                    console.log(response)
+                    // console.log(response)
                 })
             },
         }
